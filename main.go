@@ -15,6 +15,7 @@ func main() {
   todoRoutes := router.Group("/todos")
   {
     todoRoutes.GET("/test", controllers.TestApi)
+    todoRoutes.GET("/")
   }
    router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
    router.Run(":8080")

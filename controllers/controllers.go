@@ -4,7 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/takadev15/todo-apps/models"
 )
+
+var todos = make([]models.Todos, 0, 10)
 
 // test json
 func TestApi(c *gin.Context) {
