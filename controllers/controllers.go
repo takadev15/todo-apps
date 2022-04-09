@@ -66,22 +66,35 @@ func CreateTodo(c *gin.Context) {
 		return
 	}
   counter++
-  reqTodos.Id = counter
-  reqTodos.Title = inputTodos.Title
-  reqTodos.Description = inputTodos.Description
+  {
+    reqTodos.Id = counter
+    reqTodos.Title = inputTodos.Title
+    reqTodos.Description = inputTodos.Description
+  }
 	todos = append(todos, reqTodos)
 	c.JSON(http.StatusCreated, inputTodos)
 }
 
 // swagger
 func UpdateTodo(c *gin.Context) {
-  var result gin.H
+  var (
+    result gin.H
+    inputTodos InputModels
+    )
+  if err := c.ShouldBindJSON(&inputTodos); err != nil {
+    result = gin.H{
+      "error": true,
+      "message": err,
+    }
+  }
   inputId := c.Param("id")
   id, _ := strconv.Atoi(inputId)
-  for _, v := range(todos) {
+  for k, v := range(todos) {
     if v.Id == id {
+      todos[k].Title = inputTodos.Title
+      todos[k].Description = inputTodos.Description
       result = gin.H{
-        "result" : v,
+        "result" : todos[k],
       }
     }
   }
