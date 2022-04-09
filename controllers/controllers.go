@@ -11,6 +11,13 @@ import (
 
 var todos = make([]models.Todos, 0, 10)
 
+var counter int
+
+type InputModels struct {
+  Title string
+  Description string
+}
+
 // test json
 func TestApi(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
@@ -45,9 +52,12 @@ func GetById(id int) (*models.Todos, error) {
 
 // swagger
 func CreateTodo(c *gin.Context) {
-	var reqtodos models.Todos
+	var (
+    inputTodos InputModels
+    reqTodos models.Todos
+    )
 
-	err := c.ShouldBindJSON(&reqtodos)
+	err := c.ShouldBindJSON(&inputTodos)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   true,
@@ -55,8 +65,12 @@ func CreateTodo(c *gin.Context) {
 		})
 		return
 	}
-	todos = append(todos, reqtodos)
-	c.JSON(http.StatusCreated, reqtodos)
+  counter++
+  reqTodos.Id = counter
+  reqTodos.Title = inputTodos.Title
+  reqTodos.Description = inputTodos.Description
+	todos = append(todos, reqTodos)
+	c.JSON(http.StatusCreated, inputTodos)
 }
 
 // swagger
