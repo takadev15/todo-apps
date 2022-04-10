@@ -103,5 +103,15 @@ func UpdateTodo(c *gin.Context) {
 
 // swagger
 func DeleteTodo(c *gin.Context) {
+  var result gin.H
+  inputId := c.Param("id")
+  id, _ := strconv.Atoi(inputId)
+  id--
+  todos = append(todos[:id], todos[id+1:]...)
+  result = gin.H{
+    "Deleted": id,
+    "New Todos": todos,
+  }
+  c.JSON(http.StatusOK, result)
 }
 
