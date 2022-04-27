@@ -19,13 +19,6 @@ type InputModels struct {
 	Complete bool   `json:"complete"`
 }
 
-// test json
-func TestApi(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"Message": "testing",
-	})
-}
-
 // swagger
 func GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, todos)
