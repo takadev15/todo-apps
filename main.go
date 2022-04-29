@@ -8,6 +8,19 @@ import (
 	docs "github.com/takadev15/todo-apps/docs"
 )
 
+// @title           ToDo Apps API
+// @version         1.0
+// @description     Simple apps for managing todos
+
+// @contact.name   Daffa Haryadi
+// @contact.email  daffahr15@protonmail.com
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /todos
+
 func main() {
   router := gin.Default()
   docs.SwaggerInfo.BasePath = "/todos"

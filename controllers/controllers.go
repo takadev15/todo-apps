@@ -19,12 +19,25 @@ type InputModels struct {
 	Complete bool   `json:"complete"`
 }
 
-// swagger
+// GetAll godoc
+// @Summary Get details of all TODOS
+// @Description Get all TODOS
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Todos
+// @Router / [get]
 func GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, todos)
 }
 
-// swagger
+// GetTodo godoc
+// @Summary Get details of TODOS by ID
+// @Description Get TODOS by ID
+// @Accept  json
+// @Produce  json
+// @Param   id     path    string     true        "Id"
+// @Success 200 {object} models.Todos
+// @Router /:id [get]
 func GetTodo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	singleTodo, err := GetById(id)
@@ -44,7 +57,14 @@ func GetById(id int) (*models.Todos, error) {
 	return nil, errors.New("data not found")
 }
 
-// swagger
+// CreateTodo godoc
+// @Summary Create a new TODOS
+// @Description Get all TODOS
+// @Accept  json
+// @Produce  json
+// @Param   todo     body    models.Todos     true        "Todo"
+// @Success 200 {object} models.Todos
+// @Router / [post]
 func CreateTodo(c *gin.Context) {
 	var (
 		inputTodos InputModels
@@ -69,7 +89,14 @@ func CreateTodo(c *gin.Context) {
 	c.JSON(http.StatusCreated, inputTodos)
 }
 
-// swagger
+// UpdateTodo godoc
+// @Summary Update or change the todo
+// @Description Update or change todo status
+// @Accept json
+// @Produce json
+// @Param todo body models.Todos true "Update todos"
+// @Success 200 {object} models.Todos
+// @Router /:id [PUT]
 func UpdateTodo(c *gin.Context) {
 	var (
 		result     gin.H
@@ -95,7 +122,14 @@ func UpdateTodo(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// swagger
+// DeleteTodo godoc
+// @Summary Deleted the todo
+// @Description Deleted the todo based on Id
+// @Accept json
+// @Produce json
+// @Param Id path string true "Id"
+// @Success 200 {object} models.Todos
+// @Router /:id [DELETE]
 func DeleteTodo(c *gin.Context) {
 	var result gin.H
 	inputId := c.Param("id")
@@ -105,7 +139,6 @@ func DeleteTodo(c *gin.Context) {
 	todos = append(todos[:id], todos[id+1:]...)
 	result = gin.H{
 		"deleted todos": temp,
-		"new todos": todos,
 	}
 	c.JSON(http.StatusOK, result)
 }

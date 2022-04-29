@@ -1,4 +1,114 @@
+basePath: /todos
+definitions:
+  models.Todos:
+    properties:
+      complete:
+        type: boolean
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+host: localhost:8080
 info:
-  contact: {}
-paths: {}
+  contact:
+    email: daffahr15@protonmail.com
+    name: Daffa Haryadi
+  description: Simple apps for managing todos
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: ToDo Apps API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Get all TODOS
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Todos'
+            type: array
+      summary: Get details of all TODOS
+    post:
+      consumes:
+      - application/json
+      description: Get all TODOS
+      parameters:
+      - description: Todo
+        in: body
+        name: todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todos'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Todos'
+      summary: Create a new TODOS
+  /:id:
+    delete:
+      consumes:
+      - application/json
+      description: Deleted the todo based on Id
+      parameters:
+      - description: Id
+        in: path
+        name: Id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Todos'
+      summary: Deleted the todo
+    get:
+      consumes:
+      - application/json
+      description: Get TODOS by ID
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Todos'
+      summary: Get details of TODOS by ID
+    put:
+      consumes:
+      - application/json
+      description: Update or change todo status
+      parameters:
+      - description: Update todos
+        in: body
+        name: todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todos'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Todos'
+      summary: Update or change the todo
 swagger: "2.0"
